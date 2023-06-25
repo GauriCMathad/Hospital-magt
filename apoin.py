@@ -82,7 +82,8 @@ def appoint(sigin,data):
             for i in demo:
                 tree.insert('','end',values=i)
         else:
-            dd=search(data[0][5],4)
+            dd=search(data[0][0],4)
+            print(data[0][5])
             tree.insert('','end',values=dd[0])
             
     show()

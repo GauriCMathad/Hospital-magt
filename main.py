@@ -45,6 +45,7 @@ def sigin_pg(sigin,data,k):
         n=2
     def show():
         global tree
+        data=search(data[0][5])
         if(k!=0):
             demo=view(k)
         else:
@@ -81,7 +82,7 @@ def sigin_pg(sigin,data,k):
             l_msg=Label(frame_down,text=ar[k-1]+" Details",height=1,font=('Ivy 11'),bg=co0,anchor=NW)
             l_msg.place(x=10,y=290)
         else:
-            tree.insert('','end',values=data[0])
+            tree.insert('','end',values=data)
     show()      
 
     def insert():
@@ -97,7 +98,10 @@ def sigin_pg(sigin,data,k):
         if(nam)=='' or gen=='' or age=='' or dob=='' or ema =='' or phno=='' or adr==''or pas=='':
             messagebox.showwarning('data' ,'Please fill in all fields')
         else:
-            add(data,k)
+            if k:
+                add(data,k)
+            else:
+                add(data,n)
             messagebox.showinfo('data','Data added successfully!!')
             e_name.delete(0,'end')
             e_gen.delete(0,'end')
@@ -145,7 +149,11 @@ def sigin_pg(sigin,data,k):
                 npas=e_pas.get()
 
                 data=[nphno,nnam,ngen,nage,ndob,nema,nphno,nadr,npas]
-                update(data,k)
+                if k:
+                    update(data,k)
+                else:
+                    update(data,n)
+                # print(k)
                 messagebox.showinfo('Success','data updated successfully!')
                 e_name.delete(0,'end')
                 e_gen.delete(0,'end')
@@ -175,8 +183,10 @@ def sigin_pg(sigin,data,k):
             tree_dictionary=tree.item(tree_data)
             tree_list=tree_dictionary['values']
             tree_phno=str(tree_list[5])
-
-            remove(tree_phno,k)
+            if k:
+                remove(tree_phno,k)
+            else:
+                remove(tree_phno,n)
 
             messagebox.showinfo('Success','Deleted successfully!!')
             for widget in frame_table.winfo_children():
@@ -189,9 +199,10 @@ def sigin_pg(sigin,data,k):
     def to_search():
         
         phno=e_search.get()
-        
-        data=search(phno,k)
-        
+        if k:
+            data=search(phno,k)
+        else:
+            data=search(phno,n)
         def delete_hide():
             tree.delete(*tree.get_children())
         
@@ -262,8 +273,8 @@ def sigin_pg(sigin,data,k):
         b_upd.place(x=465,y=140)
         b_del=Button(frame_down,text="Delete",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=to_remove)
         b_del.place(x=465,y=180)
-        b_del=Button(frame_down,text="Exit",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=lambda:logged(sigin,data))
-        b_del.place(x=465,y=280)
+        b_exit=Button(frame_down,text="Exit",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=lambda:logged(sigin,data))
+        b_exit.place(x=465,y=280)
      
     elif (sigin=="Patient"):
         b_exit=Button(frame_down,text="Exit",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=lambda:logged(sigin,data))
@@ -280,7 +291,6 @@ def sigin_pg(sigin,data,k):
         e_dr= ttk.Combobox(frame_down,width=37)
         drdet=view(2)
         dat=[]
-        m=0
         for i in drdet:
             dat.append(i[0])
         def book():
@@ -319,6 +329,8 @@ def sigin_pg(sigin,data,k):
         b_up.place(x=465,y=60)
         b_del=Button(frame_down,text="Delete",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=to_remove)
         b_del.place(x=465,y=180)
+        b_exit=Button(frame_down,text="Exit",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=lambda:logged(sigin,data))
+        b_exit.place(x=465,y=280)
     window.mainloop()
 
     
@@ -531,6 +543,8 @@ def newsig_pg(sigin):
 
 def starting():
     clear_fra(frame_down)
+    clear_fra(frame_table)
+    clear_fra(frame_up)
     app_name=Label(frame_up,text="DG HOSPITAL",height=1,font=('Verdana 17 bold'),bg=co2,fg=co0)
     app_name.place(x=5,y=5)   
     b_ad=Button(frame_down,text="Admin",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=lambda:login("Admin"))
@@ -545,6 +559,7 @@ def clear_fra(frame):
 
 def logged(sigin,data):
     clear_fra(frame_down)
+    clear_fra(frame_table)
     
     app_name=Label(frame_up,text="Logged IN              "+sigin+"--"+data[0][0]+"  DGH",height=1,font=('Verdana 17 bold'),bg=co2,fg=co0)
     app_name.place(x=5,y=5)    
@@ -558,6 +573,7 @@ def logged(sigin,data):
         b_dr.place(x=130,y=240)
         b_ap=Button(frame_table,text="Appointments Details",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=lambda:appoint("Admin",data))
         b_ap.place(x=120,y=5)
+        
     
     elif sigin=="Doctor":
         b_my=Button(frame_down,text="My Details",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=lambda: sigin_pg("Doctor",data,0))
@@ -569,6 +585,8 @@ def logged(sigin,data):
         b_pa.place(x=130,y=100)
         b_ap=Button(frame_down,text="Appointment Details",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=lambda:appoint("Patient",data))
         b_ap.place(x=130,y=180)
+    b_exit=Button(frame_table,text="Exit",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=starting)
+    b_exit.place(x=120,y=40)
 
 
     window.mainloop()

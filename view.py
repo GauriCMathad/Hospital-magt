@@ -139,7 +139,7 @@ def update(i,n):
             with open('admin.csv','w',newline='') as file:
                 writer =csv.writer(file)
                 writer.writerows(j)
-        else :
+        elif n==4:
             with open('apoint.csv','w',newline='') as file:
                 writer =csv.writer(file)
                 writer.writerows(j)
