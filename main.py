@@ -525,6 +525,8 @@ def newsig_pg(sigin):
     b_add.place(x=465,y=100)
     b_upd=Button(frame_down,text="Update",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=to_update)
     b_upd.place(x=465,y=140)
+    b_exit=Button(frame_down,text="Update",width="12",bg=co2,font=('Ivy 10 bold'),fg=co0,command=starting)
+    b_exit.place(x=465,y=240)
     
     l_dis=Label(frame_down,text="Disease ",height=1,font=('Ivy 11'),bg=co0,anchor=NW)
     l_dis.place(x=10,y=260)
