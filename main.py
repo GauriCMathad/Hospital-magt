@@ -45,7 +45,7 @@ def sigin_pg(sigin,data,k):
         n=2
     def show():
         global tree
-        data=search(data[0][5])
+        # data=search(data[0][5])
         if(k!=0):
             demo=view(k)
         else:
@@ -82,7 +82,9 @@ def sigin_pg(sigin,data,k):
             l_msg=Label(frame_down,text=ar[k-1]+" Details",height=1,font=('Ivy 11'),bg=co0,anchor=NW)
             l_msg.place(x=10,y=290)
         else:
-            tree.insert('','end',values=data)
+            for i in demo:
+                if(i[5]==data[0][5]):
+                    tree.insert('','end',values=i)
     show()      
 
     def insert():
@@ -166,6 +168,7 @@ def sigin_pg(sigin,data,k):
                 for widget in frame_table.winfo_children():
                     widget.destroy()
                 b_confirm.destroy()
+
                 show()
             if(n==1):
                 b_confirm=Button(frame_down,text="Confirm",width="15",bg=co2,font=('Ivy 10 bold'),fg=co0,command=confirm)
@@ -586,7 +589,7 @@ def logged(sigin,data):
         b_ap=Button(frame_down,text="Appointment Details",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=lambda:appoint("Patient",data))
         b_ap.place(x=130,y=180)
     b_exit=Button(frame_table,text="Exit",width="20",bg=co2,font=('Ivy 20 bold'),fg=co0,command=starting)
-    b_exit.place(x=120,y=40)
+    b_exit.place(x=120,y=80)
 
 
     window.mainloop()
@@ -621,12 +624,12 @@ def login(sigin):
             else:
                 messagebox.showerror('Error','Wrong details!!') 
     b_back=Button(frame_down,text="Back",width="15",bg=co2,font=('Ivy 10 bold'),fg=co0,command=starting)
-    b_back.place(x=200,y=220)
+    b_back.place(x=220,y=220)
     b_log=Button(frame_down,text="Login",width="15",bg=co2,font=('Ivy 10 bold'),fg=co0,command=check)
-    b_log.place(x=200,y=260)
+    b_log.place(x=220,y=260)
     if(sigin=="Patient"):
         b_sup=Button(frame_down,text="Sign up",width="15",bg=co2,font=('Ivy 10 bold'),fg=co0,command=lambda: newsig_pg(sigin))
-        b_sup.place(x=200,y=300) 
+        b_sup.place(x=220,y=300) 
     window.mainloop()
 
 starting()
